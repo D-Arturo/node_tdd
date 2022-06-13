@@ -9,27 +9,35 @@ todoModel.create = jest.fn();
 let request, response, next;
 
 beforeEach(() => {
-    request = httpMocks.createRequest();
-    response = httpMocks.createResponse();
-    next = null;
+  request = httpMocks.createRequest();
+  response = httpMocks.createResponse();
+  next = null;
 });
 
-describe("todoController - createTodo",() => {
-    it("should have a createTodo function", () => {
-        expect(typeof todoController.createTodo).toBe("function");
-    });
+describe("todoController - createTodo", () => {
+  beforeEach(() => {
+    request.body = newTodo;
+  });
 
-    it("should call todoModel.create", () => {
-        request.body = newTodo;
-        todoController.createTodo(request, response, next);
-        expect(todoModel.create).toBeCalledWith(newTodo);
-    });
+  it("should have a createTodo function", () => {
+    expect(typeof todoController.createTodo).toBe("function");
+  });
 
-    it("should return 201 response code", () => {
-        request.body = newTodo;
-        todoController.createTodo(request, response, next);
-        expect(response.statusCode).toBe(201);
-        //this is to ensure that the response has been sent back and not only set the status but not sent
-        expect(response._isEndCalled()).toBeTruthy;
-    })
-})
+  it("should call todoModel.create", () => {
+    todoController.createTodo(request, response, next);
+    expect(todoModel.create).toBeCalledWith(newTodo);
+  });
+
+  it("should return 201 response code", () => {
+    todoController.createTodo(request, response, next);
+    expect(response.statusCode).toBe(201);
+    //this is to ensure that the response has been sent back and not only set the status but not sent
+    expect(response._isEndCalled()).toBeTruthy();
+  });
+
+  it("should return json body in response", () => {
+    TodoModel.create.mockReturnValue(newTodo);
+    todoController.createTodo(request, response, next);
+    expect(response._getJSONData()).toBe(newTodo);
+  });
+});
