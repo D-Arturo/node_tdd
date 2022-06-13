@@ -24,4 +24,10 @@ describe("todoController - createTodo",() => {
         todoController.createTodo(request, response, next);
         expect(todoModel.create).toBeCalledWith(newTodo);
     });
+
+    it("should return 201 response code", () => {
+        request.body = newTodo;
+        todoController.createTodo(request, response, next);
+        expect(response.statusCode).toBe(201);
+    })
 })
