@@ -29,5 +29,7 @@ describe("todoController - createTodo",() => {
         request.body = newTodo;
         todoController.createTodo(request, response, next);
         expect(response.statusCode).toBe(201);
+        //this is to ensure that the response has been sent back and not only set the status but not sent
+        expect(response._isEndCalled()).toBeTruthy;
     })
 })
