@@ -36,8 +36,10 @@ describe("todoController - createTodo", () => {
   });
 
   it("should return json body in response", () => {
+    //jest framework mockReturnValue function  to mock that specific return value from the function
     todoModel.create.mockReturnValue(newTodo);
     todoController.createTodo(request, response, next);
+    //_getJSONData() method from node-mocks-http itself
     expect(response._getJSONData()).toStrictEqual(newTodo);
   });
 });
