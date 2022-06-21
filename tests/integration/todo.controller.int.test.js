@@ -4,7 +4,7 @@ const newTodo = require("../mock-data/new-todo.json");
 
 const endpointUrl = "/todos/";
 
-describe(`Given "${endpointUrl}" path`, () => {
+describe(`Given "/todos/" path`, () => {
   it("when POST endpoint is called, then should create a new Todo ", async () => {
     const response = await request(app)
     .post(endpointUrl)
