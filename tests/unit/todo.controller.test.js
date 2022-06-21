@@ -28,17 +28,17 @@ describe("todoController - createTodo", () => {
     expect(todoModel.create).toBeCalledWith(newTodo);
   });
 
-  it("should return 201 response code", () => {
-    todoController.createTodo(request, response, next);
+  it("should return 201 response code", async () => {
+    await todoController.createTodo(request, response, next);
     expect(response.statusCode).toBe(201);
     //this is to ensure that the response has been sent back and not only set the status but not sent
     expect(response._isEndCalled()).toBeTruthy();
   });
 
-  it("should return json body in response", () => {
+  it("should return json body in response", async () => {
     //jest framework mockReturnValue function  to mock that specific return value from the function
     todoModel.create.mockReturnValue(newTodo);
-    todoController.createTodo(request, response, next);
+    await todoController.createTodo(request, response, next);
     //_getJSONData() method from node-mocks-http itself
     expect(response._getJSONData()).toStrictEqual(newTodo);
   });
