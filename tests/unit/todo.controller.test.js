@@ -11,7 +11,7 @@ let request, response, next;
 beforeEach(() => {
   request = httpMocks.createRequest();
   response = httpMocks.createResponse();
-  next = null;
+  next = jest.fn();
 });
 
 describe("todoController - createTodo", () => {
@@ -41,5 +41,13 @@ describe("todoController - createTodo", () => {
     await todoController.createTodo(request, response, next);
     //_getJSONData() method from node-mocks-http itself
     expect(response._getJSONData()).toStrictEqual(newTodo);
+  });
+
+  it("should handle errors", async () => {
+    const errorMessage = {message: "Todo validation failed: done: Path `done` is required."};
+    todoModel.create.mockReturnValue(Promise.reject(errorMessage));
+    await todoController.createTodo(request, response, next);
+    expect(next).toBeCalledWith(errorMessage);
+
   });
 });
