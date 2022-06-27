@@ -18,8 +18,11 @@ describe(`Given "/todos/" path`, () => {
   it("when POST endpoint is called with missing 'done' field, then a proper error should be displayed ", async () => {
     const response = await request(app)
       .post(endpointUrl)
-      .send({ message: "Missing done field" });
+      .send({ title: "Missing done field" });
 
     expect(response.status).toBe(500);
+    expect(response.body).toStrictEqual({
+      message: "Todo validation failed: done: Path `done` is required."
+    })
   });
 });
