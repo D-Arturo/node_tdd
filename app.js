@@ -11,7 +11,7 @@ app.use("/todos", todoRoutes);
 
 //Error handler according to Express
 app.use((error, request, response, next) => {
-  response.status(500).json({message: error.message})
+  response.status(500).json({ message: error.message });
 });
 
 app.get("/", (request, response) => {

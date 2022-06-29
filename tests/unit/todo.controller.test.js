@@ -14,7 +14,13 @@ beforeEach(() => {
   next = jest.fn();
 });
 
-describe("todoController - createTodo", () => {
+describe("todoController.getTodos", () => {
+  it("should have a getTodos function", () => {
+    expect(typeof todoController.getTodos).toBe("function");
+  });
+});
+
+describe("todoController.createTodo", () => {
   beforeEach(() => {
     request.body = newTodo;
   });
@@ -44,10 +50,11 @@ describe("todoController - createTodo", () => {
   });
 
   it("should handle errors", async () => {
-    const errorMessage = {message: "Todo validation failed: done: Path `done` is required."};
+    const errorMessage = {
+      message: "Todo validation failed: done: Path `done` is required.",
+    };
     todoModel.create.mockReturnValue(Promise.reject(errorMessage));
     await todoController.createTodo(request, response, next);
     expect(next).toBeCalledWith(errorMessage);
-
   });
 });
