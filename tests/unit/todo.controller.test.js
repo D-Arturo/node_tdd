@@ -5,6 +5,7 @@ const newTodo = require("../mock-data/new-todo.json");
 
 //We expect mongoose to work, we focus in test our code. That's why the mock
 todoModel.create = jest.fn();
+todoModel.find = jest.fn();
 
 let request, response, next;
 
@@ -17,6 +18,11 @@ beforeEach(() => {
 describe("todoController.getTodos", () => {
   it("should have a getTodos function", () => {
     expect(typeof todoController.getTodos).toBe("function");
+  });
+
+  it("should call todoModel.find", () => {
+    todoController.getTodos(request, response, next);
+    expect(todoModel.find).toBeCalledWith({});
   });
 });
 
