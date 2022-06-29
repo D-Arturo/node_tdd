@@ -9,8 +9,9 @@ const createTodo = async (request, response, next) => {
   }
 };
 
-const getTodos = (request, response, next) => {
-  todoModel.find({});
+const getTodos = async (request, response, next) => {
+  const allTodos = await todoModel.find({});
+  return response.status(200).json(allTodos);
 };
 
 module.exports = {

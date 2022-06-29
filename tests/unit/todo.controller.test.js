@@ -27,8 +27,8 @@ describe("todoController.getTodos", () => {
   });
 
   it("should return 200 response code and return all todos", async () => {
-    await todoController.getTodos(request, response, next);
     todoModel.find.mockReturnValue(allTodos);
+    await todoController.getTodos(request, response, next);
     expect(response.statusCode).toBe(200);
     expect(response._isEndCalled()).toBeTruthy();
     expect(response._getJSONData()).toStrictEqual(allTodos);
