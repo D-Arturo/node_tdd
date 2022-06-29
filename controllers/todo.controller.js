@@ -9,6 +9,11 @@ const createTodo = async (request, response, next) => {
   }
 };
 
+const getTodos = (request, response, next) => {
+
+};
+
 module.exports = {
   createTodo,
+  getTodos,
 };
