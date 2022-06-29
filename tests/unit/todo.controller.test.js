@@ -2,6 +2,7 @@ const todoController = require("../../controllers/todo.controller");
 const todoModel = require("../../model/todo.model");
 const httpMocks = require("node-mocks-http");
 const newTodo = require("../mock-data/new-todo.json");
+const allTodos = require("../mock-data/all-todos.json");
 
 //We expect mongoose to work, we focus in test our code. That's why the mock
 todoModel.create = jest.fn();
@@ -23,6 +24,14 @@ describe("todoController.getTodos", () => {
   it("should call todoModel.find", () => {
     todoController.getTodos(request, response, next);
     expect(todoModel.find).toBeCalledWith({});
+  });
+
+  it("should return 200 response code and return all todos", async () => {
+    await todoController.getTodos(request, response, next);
+    todoModel.find.mockReturnValue(allTodos);
+    expect(response.statusCode).toBe(200);
+    expect(response._isEndCalled()).toBeTruthy();
+    expect(response._getJSONData()).toStrictEqual(allTodos);
   });
 });
 
