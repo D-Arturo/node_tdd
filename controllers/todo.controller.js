@@ -10,7 +10,7 @@ const createTodo = async (request, response, next) => {
 };
 
 const getTodos = (request, response, next) => {
-
+  todoModel.find({});
 };
 
 module.exports = {
